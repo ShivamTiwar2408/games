@@ -1,0 +1,601 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Georgia', serif;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Add subtle animated background pattern */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    animation: backgroundFloat 20s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes backgroundFloat {
+    0%, 100% { opacity: 0.3; transform: translateY(0px); }
+    50% { opacity: 0.6; transform: translateY(-10px); }
+}
+
+.game-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    z-index: 1;
+}
+
+.wheel-section {
+    width: min(100vh, 70vw); /* Responsive width for large screens */
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    position: relative;
+}
+
+/* Add decorative elements around the wheel */
+.wheel-section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(min(100vh, 70vw) - 10px);
+    height: calc(min(100vh, 70vw) - 10px);
+    border: 3px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50%;
+    animation: wheelGlow 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes wheelGlow {
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% { 
+        box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+        transform: translate(-50%, -50%) scale(1.02);
+    }
+}
+
+#wheelCanvas {
+    width: calc(min(100vh, 70vw) - 30px);
+    height: calc(min(100vh, 70vw) - 30px);
+    max-width: calc(min(100vh, 70vw) - 30px);
+    max-height: calc(min(100vh, 70vw) - 30px);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 30px rgba(0, 0, 0, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+#wheelCanvas:hover {
+    transform: scale(1.01);
+}
+
+.controls-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 60px 50px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    min-width: 400px;
+}
+
+/* Add decorative elements to controls section */
+.controls-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ff6b35, #f7931e, #ffd700);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.game-intro {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.game-intro h1 {
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    color: #4a148c;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(45deg, #4a148c, #7b1fa2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+}
+
+.game-intro h1::after {
+    content: '🕉️';
+    position: absolute;
+    top: -10px;
+    right: -40px;
+    font-size: 0.6em;
+    color: #ffd700;
+    animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.game-intro p {
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    color: #444;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.spin-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px 0;
+    position: relative;
+}
+
+.spin-button {
+    background: linear-gradient(45deg, #ff6b35, #f7931e);
+    color: white;
+    border: none;
+    padding: 25px 50px;
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    font-weight: bold;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 
+        0 10px 25px rgba(255, 107, 53, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.spin-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s;
+}
+
+.spin-button:hover::before {
+    left: 100%;
+}
+
+.spin-button:hover {
+    background: linear-gradient(45deg, #f7931e, #ff6b35);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 
+        0 15px 35px rgba(255, 107, 53, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.spin-button:active {
+    transform: translateY(-2px) scale(1.02);
+}
+
+.spin-button:disabled {
+    background: linear-gradient(45deg, #cccccc, #aaaaaa);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.message-display {
+    background: linear-gradient(135deg, rgba(74, 20, 140, 0.1), rgba(123, 31, 162, 0.05));
+    padding: 40px;
+    border-radius: 20px;
+    border: 2px solid rgba(74, 20, 140, 0.2);
+    text-align: center;
+    margin-top: 30px;
+    box-shadow: 
+        0 8px 25px rgba(74, 20, 140, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.message-display::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #4a148c, #7b1fa2, #4a148c);
+    animation: messageGlow 2s ease-in-out infinite;
+}
+
+@keyframes messageGlow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.message-display h3 {
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    color: #4a148c;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+#messageText {
+    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+    color: #333;
+    font-style: italic;
+    line-height: 1.8;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.5s ease;
+    border-radius: 10px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.message-text {
+    font-size: inherit;
+    line-height: 1.6;
+    text-align: center;
+    color: inherit;
+    font-weight: 600;
+}
+
+.message-reference {
+    font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+    color: #666;
+    font-weight: 500;
+    font-style: normal;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(3px);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+}
+
+#messageText.new-message {
+    animation: messageReveal 0.8s ease-out;
+}
+
+@keyframes messageReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Spinning animation */
+.wheel-spinning {
+    animation: wheelSpin 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes wheelSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(1800deg); }
+}
+
+/* Ultra-wide screen optimizations */
+@media (min-width: 1920px) {
+    .wheel-section {
+        width: min(100vh, 60vw);
+    }
+    
+    #wheelCanvas {
+        width: calc(min(100vh, 60vw) - 30px);
+        height: calc(min(100vh, 60vw) - 30px);
+        max-width: calc(min(100vh, 60vw) - 30px);
+        max-height: calc(min(100vh, 60vw) - 30px);
+    }
+    
+    .wheel-section::before {
+        width: calc(min(100vh, 60vw) - 10px);
+        height: calc(min(100vh, 60vw) - 10px);
+    }
+    
+    .controls-section {
+        padding: 80px 70px;
+        min-width: 500px;
+        max-width: 800px;
+    }
+    
+    .game-intro h1 {
+        font-size: 4rem;
+    }
+    
+    .game-intro p {
+        font-size: 1.4rem;
+        max-width: 800px;
+    }
+    
+    .spin-button {
+        padding: 30px 60px;
+        font-size: 2rem;
+    }
+    
+    .message-display {
+        padding: 50px;
+    }
+    
+    #messageText {
+        font-size: 1.6rem;
+        min-height: 100px;
+    }
+}
+
+/* Large desktop screens */
+@media (min-width: 1440px) and (max-width: 1919px) {
+    .controls-section {
+        padding: 70px 60px;
+        min-width: 450px;
+    }
+    
+    .game-intro h1 {
+        font-size: 3.2rem;
+    }
+    
+    .spin-button {
+        padding: 28px 55px;
+        font-size: 1.7rem;
+    }
+    
+    #messageText {
+        font-size: 1.5rem;
+        min-height: 90px;
+    }
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 1024px) {
+    .game-container {
+        flex-direction: column;
+    }
+    
+    .wheel-section {
+        width: 100vw;
+        height: 60vh;
+        padding: 10px;
+    }
+    
+    .wheel-section::before {
+        width: calc(100vw - 20px);
+        height: calc(60vh - 20px);
+        max-width: calc(60vh - 20px);
+        max-height: calc(60vh - 20px);
+    }
+    
+    #wheelCanvas {
+        width: calc(60vh - 20px);
+        height: calc(60vh - 20px);
+        max-width: calc(100vw - 30px);
+        max-height: calc(100vw - 30px);
+    }
+    
+    .controls-section {
+        height: 40vh;
+        padding: 20px;
+        justify-content: space-around;
+        min-width: unset;
+    }
+    
+    .controls-section::before {
+        height: 3px;
+    }
+    
+    .game-intro {
+        margin-bottom: 20px;
+    }
+    
+    .game-intro h1 {
+        font-size: 2rem;
+    }
+    
+    .game-intro h1::after {
+        right: -30px;
+        top: -5px;
+    }
+    
+    .game-intro p {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+    
+    .spin-controls {
+        margin: 20px 0;
+    }
+    
+    .spin-button {
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
+    
+    .message-display {
+        padding: 20px;
+        margin-top: 10px;
+    }
+    
+    #messageText {
+        font-size: 1rem;
+        min-height: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .wheel-section {
+        height: 50vh;
+    }
+    
+    .wheel-section::before {
+        width: calc(100vw - 15px);
+        height: calc(50vh - 15px);
+        max-width: calc(50vh - 15px);
+        max-height: calc(50vh - 15px);
+    }
+    
+    #wheelCanvas {
+        width: calc(50vh - 15px);
+        height: calc(50vh - 15px);
+        max-width: calc(100vw - 25px);
+        max-height: calc(100vw - 25px);
+    }
+    
+    .controls-section {
+        height: 50vh;
+        padding: 15px;
+    }
+    
+    .game-intro h1 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    
+    .game-intro h1::after {
+        right: -25px;
+        top: -3px;
+        font-size: 0.5em;
+    }
+    
+    .game-intro p {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+    
+    .spin-button {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+    
+    .message-display h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+    
+    #messageText {
+        font-size: 0.9rem;
+        min-height: 30px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+    .wheel-section {
+        height: 45vh;
+        padding: 5px;
+    }
+    
+    .controls-section {
+        height: 55vh;
+        padding: 10px;
+    }
+    
+    .game-intro h1 {
+        font-size: 1.5rem;
+    }
+    
+    .game-intro h1::after {
+        display: none;
+    }
+    
+    .game-intro p {
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+    
+    .spin-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+    
+    .message-display {
+        padding: 15px;
+    }
+    
+    .message-display h3 {
+        font-size: 1rem;
+    }
+    
+    #messageText {
+        font-size: 0.8rem;
+        min-height: 25px;
+        line-height: 1.5;
+    }
+}
