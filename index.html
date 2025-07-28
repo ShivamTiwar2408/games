@@ -5,98 +5,200 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Janmashtami Games - Celebrate with Joy</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪔</text></svg>">
+    <meta name="description" content="Celebrate Janmashtami with delightful games and divine wisdom from Lord Krishna. Play interactive games and receive sacred messages.">
 </head>
 <body>
     <div class="background-animation"></div>
-    <div class="container">
-        <header class="header">
-            <div class="header-decoration"></div>
-            <h1 class="logo">
-                <span class="logo-icon">🪔</span>
-                <span class="logo-text">Janmashtami Games</span>
-            </h1>
-            <p class="tagline">Celebrate Krishna's Birthday with Joy & Fun</p>
-            <div class="header-ornament">
-                <span class="ornament-left">🌸</span>
-                <span class="ornament-center">✨</span>
-                <span class="ornament-right">🌸</span>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="nav-icon">🪔</span>
+                <span class="nav-text">Janmashtami Games</span>
             </div>
-        </header>
+            <div class="nav-links">
+                <a href="#games" class="nav-link">Games</a>
+                <a href="#about" class="nav-link">About</a>
+                <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+            </div>
+        </div>
+    </nav>
 
-        <main class="main-content">
-            <section class="hero">
-                <div class="hero-content">
-                    <h2 class="hero-title">🎉 Festival Fun Games 🎉</h2>
-                    <p class="hero-subtitle">Celebrate Janmashtami with delightful games for the whole family</p>
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <span class="stat-number">1</span>
-                            <span class="stat-label">Divine Game</span>
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-icon">✨</span>
+                    <span>Festival Special 2025</span>
+                </div>
+                <h1 class="hero-title">
+                    <span class="title-main">Celebrate Janmashtami</span>
+                    <span class="title-sub">with Divine Games & Wisdom</span>
+                </h1>
+                <p class="hero-description">
+                    Immerse yourself in the joy of Krishna's birthday with interactive games, 
+                    sacred wisdom, and festive celebrations designed for the whole family.
+                </p>
+                <div class="hero-actions">
+                    <button class="cta-primary" onclick="scrollToGames()">
+                        <span class="cta-icon">🎮</span>
+                        Start Playing
+                    </button>
+                    <button class="cta-secondary" onclick="learnMore()">
+                        <span class="cta-icon">📖</span>
+                        Learn More
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Divine Game</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Wisdom Messages</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Family Fun</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-elements">
+                    <div class="floating-element" style="--delay: 0s">🪔</div>
+                    <div class="floating-element" style="--delay: 1s">🌸</div>
+                    <div class="floating-element" style="--delay: 2s">✨</div>
+                    <div class="floating-element" style="--delay: 3s">🎊</div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Game Section -->
+        <section id="games" class="games-section">
+            <div class="section-header">
+                <h2 class="section-title">Krishna's Divine Wheel</h2>
+                <p class="section-subtitle">Experience divine wisdom through interactive play</p>
+            </div>
+            
+            <div class="games-grid single-game">
+                <div class="game-card featured" data-game="krishna">
+                    <div class="game-card-header">
+                        <div class="game-status">Available Now</div>
+                        <div class="game-rating">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span class="rating-text">5.0</span>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-number">∞</span>
-                            <span class="stat-label">Wisdom Messages</span>
+                    </div>
+                    <div class="game-icon-wrapper">
+                        <div class="game-icon">🎡</div>
+                        <div class="icon-bg"></div>
+                    </div>
+                    <div class="game-content">
+                        <h3 class="game-title">Krishna's Divine Wheel</h3>
+                        <p class="game-description">
+                            Spin the sacred wheel to receive personalized wisdom and blessings 
+                            from Lord Krishna's eternal teachings. Experience divine guidance 
+                            through this interactive spiritual journey.
+                        </p>
+                        <div class="game-tags">
+                            <span class="tag spiritual">Spiritual</span>
+                            <span class="tag easy">Easy</span>
+                            <span class="tag single">1 Player</span>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-number">100%</span>
-                            <span class="stat-label">Blessed Fun</span>
+                        <div class="game-stats-mini">
+                            <div class="stat-mini">
+                                <span class="stat-icon">👥</span>
+                                <span>1K+ Players</span>
+                            </div>
+                            <div class="stat-mini">
+                                <span class="stat-icon">⏱️</span>
+                                <span>2-5 min</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="play-btn">
+                        <span class="play-icon">▶</span>
+                        <span class="play-text">Play Now</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="about-title">About Janmashtami Games</h2>
+                    <p class="about-description">
+                        Our platform combines the joy of gaming with the profound wisdom of Lord Krishna's teachings. 
+                        Each game is thoughtfully designed to provide entertainment while sharing valuable life lessons 
+                        from the Bhagavad Gita and other sacred texts.
+                    </p>
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <span class="feature-check">✓</span>
+                            <span>Educational and entertaining content</span>
+                        </div>
+                        <div class="about-feature">
+                            <span class="feature-check">✓</span>
+                            <span>Suitable for all ages and backgrounds</span>
+                        </div>
+                        <div class="about-feature">
+                            <span class="feature-check">✓</span>
+                            <span>Regular updates with new games</span>
                         </div>
                     </div>
                 </div>
-            </section>
-
-            <section class="games-grid">
-                <div class="game-tile" data-game="krishna">
-                    <div class="game-tile-inner">
-                        <div class="game-icon-container">
-                            <div class="game-icon">🎡</div>
-                            <div class="icon-glow"></div>
-                        </div>
-                        <h3 class="game-title">Krishna's Message for You</h3>
-                        <p class="game-description">Spin the divine wheel to receive sacred wisdom from Lord Krishna</p>
-                        <div class="game-stats">
-                            <span class="difficulty">Easy</span>
-                            <span class="players">1 Player</span>
-                            <span class="category">Spiritual</span>
-                        </div>
-                        <div class="play-button">
-                            <span class="play-icon">▶</span>
-                            Play Now
-                        </div>
+                <div class="about-visual">
+                    <div class="wisdom-card">
+                        <div class="wisdom-icon">🕉️</div>
+                        <blockquote class="wisdom-quote">
+                            "Wherever there is Krishna, there is victory"
+                        </blockquote>
+                        <cite class="wisdom-source">- Bhagavad Gita</cite>
                     </div>
                 </div>
-                
-                <div class="game-tile coming-soon" data-game="coming-soon">
-                    <div class="game-tile-inner">
-                        <div class="game-icon-container">
-                            <div class="game-icon">🎮</div>
-                            <div class="icon-glow"></div>
-                        </div>
-                        <h3 class="game-title">More Games Coming Soon!</h3>
-                        <p class="game-description">We're preparing more exciting Janmashtami games for you</p>
-                        <div class="game-stats">
-                            <span class="coming-soon-badge">Coming Soon</span>
-                        </div>
-                        <div class="play-button disabled">
-                            <span class="play-icon">⏳</span>
-                            Stay Tuned
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
+            </div>
+        </section>
 
+        <!-- Footer -->
         <footer class="footer">
             <div class="footer-content">
-                <div class="footer-blessing">
-                    <p class="main-blessing">🎊 Happy Janmashtami 2025! 🎊</p>
-                    <p class="sub-blessing">May Lord Krishna bless you with joy and happiness!</p>
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <div class="footer-logo">
+                            <span class="footer-icon">🪔</span>
+                            <span class="footer-text">Janmashtami Games</span>
+                        </div>
+                        <p class="footer-tagline">Celebrating Krishna's wisdom through play</p>
+                    </div>
+                    <div class="footer-links">
+                        <div class="footer-section">
+                            <h4 class="footer-heading">Game</h4>
+                            <a href="games/krishna/index.html" class="footer-link">Krishna's Divine Wheel</a>
+                        </div>
+                        <div class="footer-section">
+                            <h4 class="footer-heading">Resources</h4>
+                            <a href="#about" class="footer-link">About</a>
+                            <a href="#" class="footer-link">Teachings</a>
+                            <a href="#" class="footer-link">Community</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-quote">
-                    <p class="quote-text">"Wherever there is Krishna, there is victory"</p>
-                    <p class="quote-source">- Bhagavad Gita</p>
+                <div class="footer-bottom">
+                    <div class="footer-blessing">
+                        <p class="blessing-main">🎊 Happy Janmashtami 2025! 🎊</p>
+                        <p class="blessing-sub">May Lord Krishna bless you with joy, wisdom, and prosperity</p>
+                    </div>
+                    <div class="footer-copyright">
+                        <p>&copy; 2025 Janmashtami Games. Made with 💖 for devotees worldwide.</p>
+                    </div>
                 </div>
             </div>
         </footer>
