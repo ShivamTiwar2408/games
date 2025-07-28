@@ -8,6 +8,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪔</text></svg>">
     <meta name="description" content="Celebrate Janmashtami with delightful games and divine wisdom from Lord Krishna. Play interactive games and receive sacred messages.">
+    <meta name="keywords" content="Janmashtami, Krishna, games, spiritual, festival, Bhagavad Gita, wisdom, interactive, celebration">
+    <meta name="author" content="Janmashtami Games Team">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://janmashtami-games.vercel.app/">
+    <meta property="og:title" content="Janmashtami Games - Celebrate Krishna's Birthday">
+    <meta property="og:description" content="Celebrate Janmashtami with delightful games and divine wisdom from Lord Krishna. Play interactive games and receive sacred messages.">
+    <meta property="og:image" content="https://janmashtami-games.vercel.app/games/krishna/krishna_with_flute.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://janmashtami-games.vercel.app/">
+    <meta property="twitter:title" content="Janmashtami Games - Celebrate Krishna's Birthday">
+    <meta property="twitter:description" content="Celebrate Janmashtami with delightful games and divine wisdom from Lord Krishna. Play interactive games and receive sacred messages.">
+    <meta property="twitter:image" content="https://janmashtami-games.vercel.app/games/krishna/krishna_with_flute.jpg">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#4a90e2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Janmashtami Games">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
     <div class="background-animation"></div>
@@ -43,30 +70,6 @@
                     Immerse yourself in the joy of Krishna's birthday with interactive games, 
                     sacred wisdom, and festive celebrations designed for the whole family.
                 </p>
-                <div class="hero-actions">
-                    <button class="cta-primary" onclick="scrollToGames()">
-                        <span class="cta-icon">🎮</span>
-                        Start Playing
-                    </button>
-                    <button class="cta-secondary" onclick="learnMore()">
-                        <span class="cta-icon">📖</span>
-                        Learn More
-                    </button>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-card">
-                        <div class="stat-number">1</div>
-                        <div class="stat-label">Divine Game</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">∞</div>
-                        <div class="stat-label">Wisdom Messages</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Family Fun</div>
-                    </div>
-                </div>
             </div>
             <div class="hero-visual">
                 <div class="floating-elements">
@@ -82,19 +85,12 @@
         <!-- Game Section -->
         <section id="games" class="games-section">
             <div class="section-header">
-                <h2 class="section-title">Krishna's Divine Wheel</h2>
+                <h2 class="section-title">Divine Games Collection</h2>
                 <p class="section-subtitle">Experience divine wisdom through interactive play</p>
             </div>
             
-            <div class="games-grid single-game">
+            <div class="games-grid">
                 <div class="game-card featured" data-game="krishna">
-                    <div class="game-card-header">
-                        <div class="game-status">Available Now</div>
-                        <div class="game-rating">
-                            <span class="stars">⭐⭐⭐⭐⭐</span>
-                            <span class="rating-text">5.0</span>
-                        </div>
-                    </div>
                     <div class="game-icon-wrapper">
                         <div class="game-icon">🎡</div>
                         <div class="icon-bg"></div>
@@ -109,17 +105,29 @@
                         <div class="game-tags">
                             <span class="tag spiritual">Spiritual</span>
                             <span class="tag easy">Easy</span>
-                            <span class="tag single">1 Player</span>
                         </div>
-                        <div class="game-stats-mini">
-                            <div class="stat-mini">
-                                <span class="stat-icon">👥</span>
-                                <span>1K+ Players</span>
-                            </div>
-                            <div class="stat-mini">
-                                <span class="stat-icon">⏱️</span>
-                                <span>2-5 min</span>
-                            </div>
+                    </div>
+                    <button class="play-btn">
+                        <span class="play-icon">▶</span>
+                        <span class="play-text">Play Now</span>
+                    </button>
+                </div>
+
+                <div class="game-card" data-game="yudhishtira">
+                    <div class="game-icon-wrapper">
+                        <div class="game-icon">⚖️</div>
+                        <div class="icon-bg"></div>
+                    </div>
+                    <div class="game-content">
+                        <h3 class="game-title">Yudhishtira's Quest</h3>
+                        <p class="game-description">
+                            Test your wisdom and righteousness as Yudhishtira faces Dharmaraj's 
+                            challenging questions. Save your brothers through correct answers 
+                            and demonstrate the power of truth and virtue.
+                        </p>
+                        <div class="game-tags">
+                            <span class="tag wisdom">Wisdom</span>
+                            <span class="tag challenging">Challenging</span>
                         </div>
                     </div>
                     <button class="play-btn">

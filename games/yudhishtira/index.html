@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yudhishthira's Quest - Divine Wisdom Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Enhanced reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .background-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 215, 0, 0.6);
+            border-radius: 50%;
+            animation: float 8s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced game container */
+        #game-container {
+            background: rgba(22, 33, 62, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            width: 95%;
+            max-width: 900px;
+            height: 95vh;
+            max-height: 750px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        /* Enhanced intro screen */
+        #intro-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.98) 0%, rgba(26, 26, 46, 0.98) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 1;
+            transition: all 1s ease-out;
+            z-index: 10;
+            padding: 40px;
+        }
+
+        #intro-screen.fade-out {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+        }
+
+        #intro-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ffd700, #ff6b6b, #4ecdc4);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        #intro-text {
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 85%;
+            color: #b8c5d6;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Enhanced game screen */
+        #game-screen {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.3) 0%, rgba(26, 26, 46, 0.3) 100%);
+        }
+
+        #game-screen.fade-in {
+            opacity: 1;
+        }
+
+        /* Progress bar */
+        #progress-container {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        #progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ff6b6b);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        #progress-text {
+            text-align: center;
+            font-size: 0.9em;
+            color: #b8c5d6;
+            font-weight: 500;
+        }
+
+        /* Enhanced character images */
+        .character-image {
+            position: absolute;
+            z-index: 2;
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+        }
+
+        #yudhishthira-image {
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #4a90e2, #7b68ee);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        #dharmaraj-image {
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #e94560, #8b0000);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            opacity: 0;
+            transform: translateX(20px) scale(0.8);
+            border: 2px solid #ff6b6b;
+            box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
+        }
+
+        #dharmaraj-image.active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+
+        .brother-image {
+            bottom: 20px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            border: 2px solid #666;
+            transition: all 0.5s ease;
+        }
+
+        .brother-image.unconscious {
+            background: linear-gradient(135deg, #666, #444);
+            filter: grayscale(100%) brightness(0.6);
+            opacity: 0.7;
+        }
+
+        .brother-image.saved {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            filter: grayscale(0%) brightness(1);
+            opacity: 1;
+            border-color: #4caf50;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.6);
+            animation: saved-glow 2s ease-out;
+        }
+
+        .brother-image.dead {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            filter: grayscale(100%) brightness(0.3);
+            opacity: 0.4;
+            border-color: #f44336;
+            animation: death-fade 1s ease-out;
+        }
+
+        @keyframes saved-glow {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(76, 175, 80, 0.6); }
+            50% { transform: scale(1.1); box-shadow: 0 0 25px rgba(76, 175, 80, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 15px rgba(76, 175, 80, 0.6); }
+        }
+
+        @keyframes death-fade {
+            0% { opacity: 0.7; }
+            100% { opacity: 0.4; }
+        }
+
+        /* Enhanced game UI */
+        #game-ui {
+            position: relative;
+            z-index: 3;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            justify-content: space-between;
+        }
+
+        #question-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.4em;
+            line-height: 1.5;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            font-weight: 500;
+            color: #f0f0f0;
+        }
+
+        #message-box {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 1.1em;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f0f0f0;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: 1px solid transparent;
+        }
+
+        #message-box.success {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: rgba(76, 175, 80, 0.5);
+            color: #a5d6a7;
+        }
+
+        #message-box.failure {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: rgba(244, 67, 54, 0.5);
+            color: #ef9a9a;
+        }
+
+        #message-box.info {
+            background: rgba(66, 133, 244, 0.2);
+            border-color: rgba(66, 133, 244, 0.5);
+            color: #90caf9;
+        }
+
+        /* Enhanced options */
+        #options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .option-button {
+            background: linear-gradient(135deg, rgba(83, 52, 131, 0.8), rgba(131, 52, 131, 0.8));
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 16px 24px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            outline: none;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .option-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, rgba(131, 52, 131, 0.9), rgba(83, 52, 131, 0.9));
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        .option-button:hover::before {
+            left: 100%;
+        }
+
+        .option-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .option-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: rgba(68, 68, 68, 0.8);
+            transform: none;
+        }
+
+        /* Enhanced buttons */
+        .button {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.3em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
+            margin-top: 20px;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.6);
+            background: linear-gradient(135deg, #ff6b6b, #e94560);
+        }
+
+        .button:hover::before {
+            left: 100%;
+        }
+
+        .button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+        }
+
+        /* Enhanced brothers status */
+        #brothers-status {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .brother-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #666, #444);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #e0e0e0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #666;
+        }
+
+        .brother-icon.saved {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            border-color: #4caf50;
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.5);
+            animation: saved-pulse 2s ease-out;
+        }
+
+        .brother-icon.dead {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            border-color: #f44336;
+            opacity: 0.6;
+            animation: dead-shake 0.8s ease-out;
+        }
+
+        @keyframes saved-pulse {
+            0% { transform: scale(1); box-shadow: 0 4px 20px rgba(76, 175, 80, 0.5); }
+            50% { transform: scale(1.15); box-shadow: 0 4px 25px rgba(76, 175, 80, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 4px 20px rgba(76, 175, 80, 0.5); }
+        }
+
+        @keyframes dead-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+        }
+
+        .brother-icon::after {
+            content: attr(data-name);
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.7em;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .brother-icon:hover::after {
+            opacity: 1;
+        }
+
+        /* Enhanced end screen */
+        #end-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.98) 0%, rgba(26, 26, 46, 0.98) 100%);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 15;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.5s ease-in;
+            padding: 40px;
+        }
+
+        #end-screen.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #end-message {
+            font-family: 'Cinzel', serif;
+            font-size: 3em;
+            font-weight: 700;
+            color: #e94560;
+            margin-bottom: 25px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            animation: end-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes end-glow {
+            from { text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); }
+            to { text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(233, 69, 96, 0.5); }
+        }
+
+        #end-summary {
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 85%;
+            color: #b8c5d6;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            #game-container {
+                width: 98%;
+                height: 98vh;
+                border-radius: 15px;
+            }
+
+            #intro-title {
+                font-size: 2.5em;
+            }
+
+            #intro-text, #end-summary {
+                font-size: 1.1em;
+            }
+
+            #question-box {
+                font-size: 1.2em;
+                min-height: 100px;
+                padding: 20px;
+            }
+
+            .option-button {
+                font-size: 1em;
+                padding: 14px 20px;
+            }
+
+            .button {
+                font-size: 1.1em;
+                padding: 14px 28px;
+            }
+
+            .brother-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5em;
+            }
+
+            #end-message {
+                font-size: 2.2em;
+            }
+
+            .character-image {
+                transform: scale(0.8);
+            }
+
+            #game-ui {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #intro-title {
+                font-size: 2em;
+            }
+
+            #question-box {
+                font-size: 1.1em;
+                padding: 15px;
+            }
+
+            .option-button {
+                font-size: 0.95em;
+                padding: 12px 16px;
+            }
+
+            #brothers-status {
+                gap: 15px;
+            }
+
+            .brother-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3em;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background particles -->
+    <div class="background-particles" id="particles"></div>
+
+    <div id="game-container">
+        <!-- Intro Screen -->
+        <div id="intro-screen">
+            <h1 id="intro-title">Yudhishthira's Quest</h1>
+            <p id="intro-text">
+                The Pandava brothers lie unconscious by the tranquil lake, cursed by Dharmaraj.
+                Only Yudhishthira's wisdom can save them. Answer the questions truthfully and wisely,
+                for the life of your brothers depends on it!
+            </p>
+            <button id="start-game" class="button">Begin Quest</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen">
+            <!-- Progress Bar -->
+            <div id="progress-container">
+                <div id="progress-bar">
+                    <div id="progress-fill"></div>
+                </div>
+                <div id="progress-text">Question 1 of 9</div>
+            </div>
+
+            <!-- Character Images -->
+            <div id="yudhishthira-image" class="character-image">👑</div>
+            <div id="dharmaraj-image" class="character-image">⚖️</div>
+
+            <!-- Brother Images -->
+            <div id="arjuna-image" class="character-image brother-image unconscious" style="left: 15%;">🏹</div>
+            <div id="bhima-image" class="character-image brother-image unconscious" style="left: 30%;">💪</div>
+            <div id="nakula-image" class="character-image brother-image unconscious" style="left: 55%;">🗡️</div>
+            <div id="sahadeva-image" class="character-image brother-image unconscious" style="left: 70%;">📚</div>
+
+            <div id="game-ui">
+                <div id="question-box">Welcome to Yudhishthira's Quest!</div>
+                <div id="message-box"></div>
+                <div id="options-container">
+                    <!-- Multiple choice buttons will be dynamically added here -->
+                </div>
+                <div id="brothers-status">
+                    <!-- Brother icons will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- End Screen -->
+        <div id="end-screen">
+            <h1 id="end-message"></h1>
+            <p id="end-summary"></p>
+            <button id="restart-game" class="button">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced game elements
+        const introScreen = document.getElementById('intro-screen');
+        const startGameBtn = document.getElementById('start-game');
+        const gameScreen = document.getElementById('game-screen');
+        const questionBox = document.getElementById('question-box');
+        const optionsContainer = document.getElementById('options-container');
+        const messageBox = document.getElementById('message-box');
+        const brothersStatusDiv = document.getElementById('brothers-status');
+        const endScreen = document.getElementById('end-screen');
+        const endMessage = document.getElementById('end-message');
+        const endSummary = document.getElementById('end-summary');
+        const restartGameBtn = document.getElementById('restart-game');
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+
+        // Character image elements
+        const dharmarajImage = document.getElementById('dharmaraj-image');
+        const arjunaImage = document.getElementById('arjuna-image');
+        const bhimaImage = document.getElementById('bhima-image');
+        const nakulaImage = document.getElementById('nakula-image');
+        const sahadevaImage = document.getElementById('sahadeva-image');
+
+        // Enhanced game state
+        let brothers = [
+            { name: 'Arjuna', status: 'unconscious', imageElement: arjunaImage, emoji: '🏹' },
+            { name: 'Bhima', status: 'unconscious', imageElement: bhimaImage, emoji: '💪' },
+            { name: 'Nakula', status: 'unconscious', imageElement: nakulaImage, emoji: '🗡️' },
+            { name: 'Sahadeva', status: 'unconscious', imageElement: sahadevaImage, emoji: '📚' }
+        ];
+
+        // Curated questions for better gameplay experience
+        const allQuestionsPool = [
+            {
+                question: 'What is weightier than the earth, higher than the sky, swifter than the wind, and more numerous than blades of grass?',
+                options: ['Father', 'Mother', 'Mind', 'Children'],
+                correctAnswerIndex: 1,
+                explanation: 'Mother is weightier than earth (in importance), higher than sky (in love), swifter than wind (in response to child\'s need), and more numerous than grass (in thoughts of her children).'
+            },
+            {
+                question: 'What is the greatest wonder in the world?',
+                options: ['The vastness of the ocean', 'The birth of a new star', 'Even though creatures die every moment, those who remain desire to live forever', 'The complexity of the human mind'],
+                correctAnswerIndex: 2,
+                explanation: 'Despite witnessing death constantly, living beings continue to believe they will live forever - this is indeed the greatest wonder.'
+            },
+            {
+                question: 'What is that which, if renounced, makes one agreeable?',
+                options: ['Anger', 'Greed', 'Pride', 'Lust'],
+                correctAnswerIndex: 2,
+                explanation: 'Renouncing pride makes one humble and agreeable to others, as pride creates barriers between people.'
+            },
+            {
+                question: 'What is the true path?',
+                options: ['The path of wealth', 'The path of power', 'The path trodden by the great ones', 'The path of solitude'],
+                correctAnswerIndex: 2,
+                explanation: 'The true path is that which has been walked by great souls and sages throughout history.'
+            },
+            {
+                question: 'What is the best of all gains?',
+                options: ['Health', 'Wealth', 'Knowledge', 'Friendship'],
+                correctAnswerIndex: 0,
+                explanation: 'Health is the foundation of all other achievements and the greatest gain one can have.'
+            },
+            {
+                question: 'What is the greatest enemy?',
+                options: ['Anger', 'Greed', 'Lust', 'Ignorance'],
+                correctAnswerIndex: 0,
+                explanation: 'Anger destroys wisdom, burns merit, and leads to the destruction of relationships and peace.'
+            },
+            {
+                question: 'What is true happiness?',
+                options: ['Contentment', 'Wealth', 'Fame', 'Power'],
+                correctAnswerIndex: 0,
+                explanation: 'True happiness comes from contentment, which is independent of external circumstances.'
+            },
+            {
+                question: 'What is the source of all dharma?',
+                options: ['The Vedas', 'The conduct of good people', 'Both the Vedas and the conduct of good people', 'Personal conscience'],
+                correctAnswerIndex: 2,
+                explanation: 'Dharma is established both by the Vedas and by the conduct of virtuous people who follow them.'
+            },
+            {
+                question: 'What makes a person truly wealthy?',
+                options: ['Gold and jewels', 'Good character', 'Land and property', 'Knowledge'],
+                correctAnswerIndex: 1,
+                explanation: 'Good character is the true wealth that cannot be stolen and brings lasting prosperity.'
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let selectedQuestions = [];
+        let correctAnswers = 0;
+        let gameActive = false;
+
+        // Initialize background particles
+        function createBackgroundParticles() {
+            const particlesContainer = document.getElementById('particles');
+            
+            function createParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+                particlesContainer.appendChild(particle);
+                
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 12000);
+            }
+            
+            // Create initial particles
+            for (let i = 0; i < 15; i++) {
+                setTimeout(createParticle, i * 200);
+            }
+            
+            // Continue creating particles
+            setInterval(createParticle, 800);
+        }
+
+        // Initialize brothers status display
+        function initializeBrothersStatus() {
+            brothersStatusDiv.innerHTML = '';
+            brothers.forEach(brother => {
+                const brotherIcon = document.createElement('div');
+                brotherIcon.className = 'brother-icon';
+                brotherIcon.setAttribute('data-name', brother.name);
+                brotherIcon.textContent = brother.emoji;
+                brothersStatusDiv.appendChild(brotherIcon);
+                brother.statusElement = brotherIcon;
+            });
+        }
+
+        // Select random questions for the game
+        function selectGameQuestions() {
+            const shuffled = [...allQuestionsPool].sort(() => 0.5 - Math.random());
+            selectedQuestions = shuffled.slice(0, Math.min(9, allQuestionsPool.length));
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const progress = ((currentQuestionIndex) / selectedQuestions.length) * 100;
+            progressFill.style.width = progress + '%';
+            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${selectedQuestions.length}`;
+        }
+
+        // Display current question
+        function displayQuestion() {
+            if (currentQuestionIndex >= selectedQuestions.length) {
+                endGame();
+                return;
+            }
+
+            const question = selectedQuestions[currentQuestionIndex];
+            questionBox.textContent = question.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create option buttons
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = option;
+                button.addEventListener('click', () => selectAnswer(index));
+                optionsContainer.appendChild(button);
+            });
+
+            // Show Dharmaraj when question appears
+            dharmarajImage.classList.add('active');
+            
+            // Update progress
+            updateProgress();
+            
+            // Clear message box
+            messageBox.textContent = '';
+            messageBox.className = '';
+        }
+
+        // Handle answer selection
+        function selectAnswer(selectedIndex) {
+            if (!gameActive) return;
+            
+            const question = selectedQuestions[currentQuestionIndex];
+            const isCorrect = selectedIndex === question.correctAnswerIndex;
+            
+            // Disable all option buttons
+            const optionButtons = document.querySelectorAll('.option-button');
+            optionButtons.forEach(button => {
+                button.disabled = true;
+            });
+            
+            // Highlight correct and selected answers
+            optionButtons[question.correctAnswerIndex].style.background = 'linear-gradient(135deg, #4caf50, #45a049)';
+            optionButtons[question.correctAnswerIndex].style.borderColor = '#4caf50';
+            
+            if (!isCorrect) {
+                optionButtons[selectedIndex].style.background = 'linear-gradient(135deg, #f44336, #d32f2f)';
+                optionButtons[selectedIndex].style.borderColor = '#f44336';
+            }
+            
+            // Show explanation
+            messageBox.textContent = question.explanation;
+            messageBox.className = isCorrect ? 'success' : 'failure';
+            
+            if (isCorrect) {
+                correctAnswers++;
+                // Save a brother
+                const unconsciousBrothers = brothers.filter(b => b.status === 'unconscious');
+                if (unconsciousBrothers.length > 0) {
+                    const savedBrother = unconsciousBrothers[0];
+                    savedBrother.status = 'saved';
+                    savedBrother.imageElement.classList.remove('unconscious');
+                    savedBrother.imageElement.classList.add('saved');
+                    savedBrother.statusElement.classList.add('saved');
+                }
+            } else {
+                // Kill a brother
+                const unconsciousBrothers = brothers.filter(b => b.status === 'unconscious');
+                if (unconsciousBrothers.length > 0) {
+                    const deadBrother = unconsciousBrothers[unconsciousBrothers.length - 1];
+                    deadBrother.status = 'dead';
+                    deadBrother.imageElement.classList.remove('unconscious');
+                    deadBrother.imageElement.classList.add('dead');
+                    deadBrother.statusElement.classList.add('dead');
+                }
+            }
+            
+            // Move to next question after delay
+            setTimeout(() => {
+                currentQuestionIndex++;
+                displayQuestion();
+            }, 3000);
+        }
+
+        // End the game
+        function endGame() {
+            gameActive = false;
+            const savedBrothers = brothers.filter(b => b.status === 'saved').length;
+            const deadBrothers = brothers.filter(b => b.status === 'dead').length;
+            
+            let message, summary;
+            
+            if (savedBrothers === 4) {
+                message = 'Victory!';
+                summary = `Congratulations! Your wisdom has saved all your brothers. You answered ${correctAnswers} out of ${selectedQuestions.length} questions correctly. The Pandavas are reunited and ready to continue their journey.`;
+            } else if (savedBrothers >= 2) {
+                message = 'Partial Success';
+                summary = `You have saved ${savedBrothers} of your brothers through your wisdom. ${deadBrothers} brothers could not be revived. Your journey continues with those who remain.`;
+            } else if (savedBrothers === 1) {
+                message = 'Difficult Victory';
+                summary = `Only one brother could be saved through your answers. The path of dharma is challenging, but you have shown some wisdom. Learn from this experience.`;
+            } else {
+                message = 'Defeat';
+                summary = `All your brothers remain unconscious. Your answers did not demonstrate sufficient wisdom to save them. Reflect on the teachings and try again.`;
+            }
+            
+            endMessage.textContent = message;
+            endSummary.textContent = summary;
+            endScreen.classList.add('show');
+        }
+
+        // Start the game
+        function startGame() {
+            gameActive = true;
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            
+            // Reset brothers
+            brothers.forEach(brother => {
+                brother.status = 'unconscious';
+                brother.imageElement.className = 'character-image brother-image unconscious';
+                brother.statusElement.className = 'brother-icon';
+            });
+            
+            // Select questions and initialize
+            selectGameQuestions();
+            initializeBrothersStatus();
+            
+            // Transition screens
+            introScreen.classList.add('fade-out');
+            setTimeout(() => {
+                gameScreen.classList.add('fade-in');
+                displayQuestion();
+            }, 1000);
+        }
+
+        // Restart the game
+        function restartGame() {
+            endScreen.classList.remove('show');
+            gameScreen.classList.remove('fade-in');
+            introScreen.classList.remove('fade-out');
+            
+            setTimeout(() => {
+                dharmarajImage.classList.remove('active');
+            }, 500);
+        }
+
+        // Event listeners
+        startGameBtn.addEventListener('click', startGame);
+        restartGameBtn.addEventListener('click', restartGame);
+
+        // Initialize the game
+        document.addEventListener('DOMContentLoaded', () => {
+            createBackgroundParticles();
+            initializeBrothersStatus();
+        });
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (!gameActive) return;
+            
+            const optionButtons = document.querySelectorAll('.option-button:not(:disabled)');
+            if (e.key >= '1' && e.key <= '4') {
+                const index = parseInt(e.key) - 1;
+                if (optionButtons[index]) {
+                    optionButtons[index].click();
+                }
+            }
+        });
+
+        // Prevent context menu on long press (mobile)
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        // Handle visibility change
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // Pause any animations when page is not visible
+                document.body.style.animationPlayState = 'paused';
+            } else {
+                // Resume animations when page becomes visible
+                document.body.style.animationPlayState = 'running';
+            }
+        });
+    </script>
+</body>
+</html>

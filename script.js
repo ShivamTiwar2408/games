@@ -147,6 +147,7 @@ function handleGameCardClick(gameType, card) {
         // Navigate to the game
         const gameUrls = {
             'krishna': 'games/krishna/index.html',
+            'yudhishtira': 'games/yudhishtira/index.html',
             'snake': 'games/snake/index.html',
             'pong': 'games/pong/index.html'
         };

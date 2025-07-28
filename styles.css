@@ -25,11 +25,11 @@
     
     /* Spacing */
     --spacing-xs: 0.5rem;
-    --spacing-sm: 1rem;
-    --spacing-md: 1.5rem;
-    --spacing-lg: 2rem;
-    --spacing-xl: 3rem;
-    --spacing-2xl: 4rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 2.5rem;
     
     /* Border radius */
     --radius-sm: 8px;
@@ -172,17 +172,17 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 90px var(--spacing-md) var(--spacing-lg);
+    padding: 70px var(--spacing-md) var(--spacing-md);
 }
 
 /* Hero Section */
 .hero-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-2xl);
+    gap: var(--spacing-xl);
     align-items: center;
-    min-height: 80vh;
-    margin-bottom: var(--spacing-2xl);
+    min-height: 45vh;
+    margin-bottom: var(--spacing-lg);
 }
 
 .hero-content {
@@ -199,7 +199,7 @@ body {
     border-radius: var(--radius-xl);
     font-size: 0.9rem;
     font-weight: 600;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
     animation: pulse 2s ease-in-out infinite;
 }
 
@@ -212,8 +212,8 @@ body {
     font-family: var(--font-display);
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: var(--spacing-md);
+    line-height: 1.05;
+    margin-bottom: var(--spacing-xs);
     color: var(--text-primary);
 }
 
@@ -230,14 +230,14 @@ body {
     color: var(--text-secondary);
     font-size: 0.7em;
     font-weight: 400;
-    margin-top: var(--spacing-xs);
+    margin-top: 0.1rem;
 }
 
 .hero-description {
     font-size: 1.2rem;
     color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: var(--spacing-xl);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-md);
 }
 
 .hero-actions {
@@ -349,7 +349,7 @@ body {
 /* Section Styles */
 .section-header {
     text-align: center;
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-lg);
 }
 
 .section-title {
@@ -357,7 +357,7 @@ body {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
 }
 
 .section-subtitle {
@@ -414,13 +414,13 @@ body {
 
 /* Games Section */
 .games-section {
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-lg);
 }
 
 .games-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: var(--spacing-xl);
+    gap: var(--spacing-lg);
 }
 
 .games-grid.single-game {
@@ -520,7 +520,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
     position: relative;
 }
 
@@ -552,21 +552,21 @@ body {
 }
 
 .game-content {
-    padding: 0 var(--spacing-md) var(--spacing-md);
+    padding: 0 var(--spacing-md) var(--spacing-sm);
 }
 
 .game-title {
     font-size: 1.4rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
     text-align: center;
 }
 
 .game-description {
     color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: var(--spacing-md);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-sm);
     text-align: center;
 }
 
@@ -575,7 +575,7 @@ body {
     justify-content: center;
     gap: var(--spacing-xs);
     flex-wrap: wrap;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
 }
 
 .tag {
@@ -592,6 +592,8 @@ body {
 .tag.classic { background: linear-gradient(135deg, #2196f3, #1976d2); color: white; }
 .tag.easy { background: linear-gradient(135deg, #4caf50, #45a049); color: white; }
 .tag.medium { background: linear-gradient(135deg, #ff9800, #f57c00); color: white; }
+.tag.challenging { background: linear-gradient(135deg, #f44336, #d32f2f); color: white; }
+.tag.wisdom { background: linear-gradient(135deg, #673ab7, #512da8); color: white; }
 .tag.single { background: var(--background-alt); color: var(--text-secondary); }
 .tag.multi { background: var(--background-alt); color: var(--text-secondary); }
 .tag.upcoming { background: linear-gradient(135deg, #607d8b, #455a64); color: white; }
@@ -663,14 +665,14 @@ body {
 
 /* About Section */
 .about-section {
-    margin-bottom: var(--spacing-2xl);
-    padding: var(--spacing-2xl) 0;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-xl) 0;
 }
 
 .about-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-2xl);
+    gap: var(--spacing-xl);
     align-items: center;
 }
 
@@ -679,14 +681,14 @@ body {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
 }
 
 .about-description {
     font-size: 1.1rem;
     color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: var(--spacing-lg);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
 }
 
 .about-features {
@@ -711,7 +713,7 @@ body {
 
 .wisdom-card {
     background: var(--surface);
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
     border-radius: var(--radius-lg);
     text-align: center;
     box-shadow: 0 8px 30px var(--shadow-light);
@@ -720,7 +722,7 @@ body {
 
 .wisdom-icon {
     font-size: 3rem;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
     display: block;
 }
 
@@ -743,18 +745,18 @@ body {
 .footer {
     background: var(--surface);
     border-top: 1px solid var(--border-light);
-    margin-top: var(--spacing-2xl);
+    margin-top: var(--spacing-xl);
 }
 
 .footer-content {
-    padding: var(--spacing-2xl) 0;
+    padding: var(--spacing-xl) 0;
 }
 
 .footer-main {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-2xl);
-    margin-bottom: var(--spacing-xl);
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
 }
 
 .footer-brand {
@@ -820,12 +822,12 @@ body {
 
 .footer-bottom {
     border-top: 1px solid var(--border-light);
-    padding-top: var(--spacing-lg);
+    padding-top: var(--spacing-md);
     text-align: center;
 }
 
 .footer-blessing {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
 }
 
 .blessing-main {
