@@ -15,7 +15,7 @@ class KrishnaWheel {
         
         // Load Krishna image
         this.krishnaImage = new Image();
-        this.krishnaImage.src = 'krishna_with_flute.jpg';
+        this.krishnaImage.src = 'krishna/krishna_with_flute.jpg';
         this.imageLoaded = false;
         
         this.krishnaImage.onload = () => {
@@ -302,6 +302,14 @@ class KrishnaWheel {
         this.spinButton.disabled = true;
         this.spinButton.textContent = 'SPINNING...';
         
+        // Hide Krishna's image while spinning
+        this.messageText.innerHTML = `
+            <div class="message-content">
+                <div class="krishna-says">Lord Krishna says:</div>
+                <div class="message-text">Spinning the wheel of wisdom...</div>
+            </div>
+        `;
+        
         // Calculate segment angle for precise stopping
         const segmentAngle = (2 * Math.PI) / this.messages.length;
         
@@ -313,8 +321,8 @@ class KrishnaWheel {
         const targetSegmentCenter = randomSegment * segmentAngle + (segmentAngle / 2);
         const finalRotation = this.currentRotation + (baseSpins * 2 * Math.PI) + targetSegmentCenter;
         
-        // Extended duration for gradual slowdown
-        const duration = 10000; // 10 seconds
+        // Shorter duration for testing
+        const duration = 3000; // 3 seconds
         
         const startTime = Date.now();
         const startRotation = this.currentRotation;
@@ -360,26 +368,62 @@ class KrishnaWheel {
         const selectedSegment = Math.floor(adjustedAngle / segmentAngle);
         const messageIndex = selectedSegment % this.messages.length;
         
+        // Ensure message display is visible
+        const messageDisplay = document.getElementById('messageDisplay');
+        messageDisplay.style.display = 'block';
+        messageDisplay.style.opacity = '1';
+        messageDisplay.style.visibility = 'visible';
+        
+        // Force the message display to be visible by adding a class
+        messageDisplay.classList.add('active-message');
+        
         // Display the message with matching color
         this.showMessage(this.messages[messageIndex], this.colors[messageIndex]);
+        
+        // Log to console for debugging
+        console.log("Wheel stopped, showing message:", this.messages[messageIndex].text);
     }
     
     showMessage(messageObj, color) {
         // Add animation class for new message
         this.messageText.classList.remove('new-message');
         
+        console.log("Preparing to show Krishna's message with image");
+        
         // Small delay to ensure class is removed before adding it back
         setTimeout(() => {
-            // Create HTML content with message and reference
+            // Create HTML content with message, reference, and Krishna's image
+            console.log("Setting message content with Krishna's image");
+            
             this.messageText.innerHTML = `
                 <div class="message-content">
+                    <div class="krishna-image-container large">
+                        <img src="krishna/BG_Krishna.jpg" alt="Lord Krishna" class="krishna-message-image" onload="console.log('Krishna image loaded in DOM')" onerror="console.log('Error loading Krishna image in DOM')">
+                    </div>
+                    <div class="krishna-says">Lord Krishna says:</div>
                     <div class="message-text">"${messageObj.text}"</div>
                     <div class="message-reference">— ${messageObj.reference}</div>
                 </div>
             `;
+            
+            // Apply styles directly to ensure visibility
             this.messageText.style.color = color;
             this.messageText.style.textShadow = `2px 2px 4px rgba(0, 0, 0, 0.3)`;
+            
+            // Make sure the message display is visible with important styles
+            const messageDisplay = document.getElementById('messageDisplay');
+            messageDisplay.style.display = 'block';
+            messageDisplay.style.opacity = '1';
+            messageDisplay.style.visibility = 'visible';
+            
+            // Force the message display to be visible by adding a class
+            messageDisplay.classList.add('active-message');
+            
+            // Add animation class
             this.messageText.classList.add('new-message');
+            
+            // Log to console for debugging
+            console.log("Showing Krishna's message:", messageObj.text);
         }, 50);
     }
 }

@@ -8,7 +8,7 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     font-family: 'Georgia', serif;
     height: 100vh;
-    overflow: hidden;
+    overflow: hidden; /* Prevent scrolling */
     position: relative;
 }
 
@@ -34,10 +34,11 @@ body::before {
 
 .game-container {
     display: flex;
-    height: 100vh;
+    height: 100vh; /* Changed from min-height to fixed height */
     width: 100vw;
     position: relative;
     z-index: 1;
+    overflow: hidden; /* Prevent scrolling */
 }
 
 .wheel-section {
@@ -96,13 +97,14 @@ body::before {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 60px 50px;
+    justify-content: flex-start; /* Changed from space-between to flex-start */
+    padding: 30px 40px;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(15px);
     border-left: 1px solid rgba(255, 255, 255, 0.3);
     position: relative;
     min-width: 400px;
+    overflow-y: auto; /* Add scrolling if needed */
 }
 
 /* Add decorative elements to controls section */
@@ -124,7 +126,6 @@ body::before {
 
 .game-intro {
     text-align: center;
-    margin-bottom: 40px;
     animation: fadeInUp 1s ease-out;
 }
 
@@ -181,7 +182,6 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 40px 0;
     position: relative;
 }
 
@@ -240,16 +240,39 @@ body::before {
 
 .message-display {
     background: linear-gradient(135deg, rgba(74, 20, 140, 0.1), rgba(123, 31, 162, 0.05));
-    padding: 40px;
+    padding: 25px;
     border-radius: 20px;
     border: 2px solid rgba(74, 20, 140, 0.2);
     text-align: center;
-    margin-top: 30px;
+    margin-top: 20px;
     box-shadow: 
         0 8px 25px rgba(74, 20, 140, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    max-height: 1000px;
+    transition: max-height 0.5s ease-in-out;
+    margin-bottom: 20px; /* Reduced margin at the bottom */
+}
+
+.active-message {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: messageAppear 0.5s ease-in-out forwards;
+    border: 3px solid #ffd700 !important;
+    box-shadow: 
+        0 10px 30px rgba(74, 20, 140, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 0 15px rgba(255, 215, 0, 0.3) !important;
+}
+
+@keyframes messageAppear {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
 }
 
 .message-display::before {
@@ -296,30 +319,76 @@ body::before {
 }
 
 .message-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 12px !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 15px !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+    min-height: 250px !important; /* Further reduced height */
+    overflow-y: auto !important; /* Add scrolling if needed */
+}
+
+.krishna-image-container {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    margin-bottom: 10px;
+}
+
+.krishna-image-container.large {
+    width: 130px;
+    height: 130px;
+    border-width: 3px;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+    margin: 0 auto 10px;
+}
+
+.krishna-message-image {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.krishna-says {
+    font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+    color: #4a148c;
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(45deg, #4a148c, #7b1fa2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .message-text {
     font-size: inherit;
-    line-height: 1.6;
+    line-height: 1.5;
     text-align: center;
     color: inherit;
     font-weight: 600;
+    margin-bottom: 5px;
 }
 
 .message-reference {
-    font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+    font-size: clamp(0.8rem, 1.2vw, 1rem);
     color: #666;
     font-weight: 500;
     font-style: normal;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     background: rgba(255, 255, 255, 0.2);
-    padding: 8px 16px;
-    border-radius: 20px;
+    padding: 5px 12px;
+    border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(3px);
     letter-spacing: 1px;
